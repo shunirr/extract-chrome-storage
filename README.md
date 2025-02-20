@@ -1,5 +1,12 @@
 # extract-chrome-storage
 
+This is a CLI tool that extracts Chrome's cookie data and Local Storage data.
+
+## Requirement
+
+- macOS
+- go 1.23.4
+
 ## Install
 
 ```console
