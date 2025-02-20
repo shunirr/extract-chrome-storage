@@ -1,6 +1,6 @@
 # extract-chrome-storage
 
-This is a CLI tool that extracts Chrome's cookie data and Local Storage data.
+This is a CLI tool to extract Chrome storage, such as cookies and local storage.
 
 ## Requirement
 
