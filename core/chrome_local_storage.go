@@ -47,6 +47,9 @@ func ListChromeLocalStorageKeys(localStoragePath string, url string) ([]string, 
 	}
 	iter.Release()
 	err = iter.Error()
+	if err != nil {
+		return nil, fmt.Errorf("failed to iterate the LevelDB\n%s", err)
+	}
 
 	return keys, nil
 }
