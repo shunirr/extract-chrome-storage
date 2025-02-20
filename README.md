@@ -22,7 +22,7 @@ extract-chrome-storage --help
 ### Cookie
 
 ```console
-extract-chrome-storage cookie --domain "www.example.com"
+extract-chrome-storage cookie --domain ".example.com"
 ```
 
 ### Local Storage
@@ -34,7 +34,7 @@ extract-chrome-storage local-storage --domain "www.example.com" --key "localStor
 ### Slack app data
 
 ```console
-extract-chrome-storage cookie --browser slack --app-store --domain "app.slack.com" | jq .
+extract-chrome-storage cookie --browser slack --app-store --domain ".slack.com" | jq .
 ```
 
 ```console
