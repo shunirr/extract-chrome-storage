@@ -2,11 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"extract-chrome-storage/core"
 	"fmt"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/shunirr/extract-chrome-storage/core"
 
 	"github.com/urfave/cli"
 )
