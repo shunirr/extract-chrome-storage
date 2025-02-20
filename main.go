@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/shunirr/extract-chrome-storage/core"
+	"extract-chrome-storage/core"
 
 	"github.com/urfave/cli"
 )
