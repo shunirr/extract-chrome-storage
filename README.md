@@ -10,7 +10,7 @@ This is a CLI tool to extract Chrome storage, such as cookies and local storage.
 ## Install
 
 ```console
-go install github.com/shunirr/extract-chrome-storage
+go install github.com/shunirr/extract-chrome-storage@latest
 ```
 
 ## Usage
