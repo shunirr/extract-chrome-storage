@@ -1,4 +1,15 @@
 {
-    "editor.tabSize": 2,
-    "editor.useTabStops": false
+  "editor.tabSize": 2,
+  "editor.useTabStops": false,
+  "cSpell.words": [
+    "goleveldb",
+    "leveldb",
+    "mattn",
+    "slackmacgap",
+    "syndtr",
+    "tinyspeck",
+    "unpad",
+    "unpadding",
+    "urfave"
+  ]
 }

@@ -11,6 +11,7 @@ import (
 )
 
 func GetDecryptKey(password string) []byte {
+	// spell-checker: disable-next-line
 	return pbkdf2.Key([]byte(password), []byte("saltysalt"), 1003, 16, sha1.New)
 }
 
@@ -23,7 +24,7 @@ func DecryptChromeCookieValue(encryptedValue []byte, key []byte, version int) (s
 	}
 
 	if len(encryptedValue) < aes.BlockSize {
-		return "", errors.New("ciphertext too short")
+		return "", errors.New("cipher text too short")
 	}
 
 	decrypted := make([]byte, len(encryptedValue)-3)
@@ -37,12 +38,12 @@ func DecryptChromeCookieValue(encryptedValue []byte, key []byte, version int) (s
 		cookieText = string(decrypted)
 	}
 
-	cookieText = string(unpad([]byte(cookieText)))
+	cookieText = string(unpadding([]byte(cookieText)))
 
 	return cookieText, nil
 }
 
-func unpad(src []byte) []byte {
+func unpadding(src []byte) []byte {
 	length := len(src)
 	unpad := int(src[length-1])
 	return src[:(length - unpad)]

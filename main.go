@@ -140,7 +140,7 @@ func printSlackLocalStorage(appType AppTypeEnum, host string, key string, levelD
 func main() {
 	app := &cli.App{
 		Name:  "extract-chrome-storage",
-		Usage: "This is a CLI tool to extract Chrome storage, such as cookies and local storage.",
+		Usage: "This is a CLI tool for extracting Chrome storage, such as cookies and local storage.",
 		Commands: []cli.Command{
 			{
 				Name:  "cookie",
@@ -153,7 +153,7 @@ func main() {
 					},
 					&cli.BoolFlag{
 						Name:  "app-store",
-						Usage: "If you installed browser app from App Store",
+						Usage: "If you installed the browser app from the App Store",
 					},
 					&cli.StringFlag{
 						Name:     "domain",
