@@ -5,12 +5,11 @@ This is a CLI tool for extracting Chrome storage, such as cookies and local stor
 ## Requirement
 
 - macOS
-- go 1.23.4
 
 ## Install
 
 ```console
-go install github.com/shunirr/extract-chrome-storage@latest
+brew install shunirr/extract-chrome-storage/extract-chrome-storage
 ```
 
 ## Usage
