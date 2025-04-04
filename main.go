@@ -73,24 +73,29 @@ func printChromeCookies(host string, cookiesPath *string) {
 }
 
 func printSlackCookies(appType AppTypeEnum, cookiesPath *string) {
-	var account string
-	if appType == AppStore {
-		account = "Slack App Store Key"
-	} else {
-		account = "Slack Key"
+	accounts := []string{
+		"Slack App Store Key",
+		"Slack Key",
+		"Slack",
 	}
 	if cookiesPath == nil {
 		chromeDir := getSlackDir(appType)
 		path := getCookiesPath(chromeDir)
 		cookiesPath = &path
 	}
-	cookies, err := core.GetChromeCookies(
-		*cookiesPath,
-		".slack.com",
-		account,
-	)
-	if err != nil {
-		panic(err)
+	var cookies = make(map[string]string)
+	for _, account := range accounts {
+		cookies, _ = core.GetChromeCookies(
+			*cookiesPath,
+			".slack.com",
+			account,
+		)
+		if len(cookies) > 0 {
+			break
+		}
+	}
+	if len(cookies) == 0 {
+		panic("Failed to get cookies")
 	}
 
 	json, err := convertToJson(cookies)
