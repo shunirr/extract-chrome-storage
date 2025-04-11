@@ -1,11 +1,17 @@
 package core
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
+	"regexp"
+
+	"golang.org/x/text/encoding/unicode"
 
 	"github.com/syndtr/goleveldb/leveldb"
+	"golang.org/x/text/transform"
 )
 
 func ListChromeLocalStorageKeys(localStoragePath string, url string) ([]string, error) {
@@ -105,8 +111,37 @@ func GetChromeLocalStorage(localStoragePath string, url string, localStorageKey 
 	if value[0] == 0x01 {
 		value = value[1:]
 	}
+	if len(value)%2 != 0 {
+		value = value[:len(value)-1]
+	}
 
-	return string(value), nil
+	json, err := recoverBrokenJson(value)
+	if err != nil {
+		return "", fmt.Errorf("failed to recover broken json: %s\n%s", value, err)
+	}
+
+	return json, nil
+}
+
+func decodeUTF16(b []byte) (string, error) {
+	decoder := unicode.UTF16(unicode.BigEndian, unicode.IgnoreBOM).NewDecoder()
+	reader := transform.NewReader(bytes.NewReader(b), decoder)
+	decoded, err := io.ReadAll(reader)
+	if err != nil {
+		return "", err
+	}
+	return string(decoded), nil
+}
+
+func recoverBrokenJson(input []byte) (string, error) {
+	decoded, err := decodeUTF16(input)
+	if err != nil {
+		return "", fmt.Errorf("failed to decode UTF-16: %s\n%s", input, err)
+	}
+	re := regexp.MustCompile(`:"([^",]+),"`)
+
+	fixed := re.ReplaceAllString(decoded, `:"$1","`)
+	return fixed, nil
 }
 
 func copyLevelDbFile(src, dst string) error {
