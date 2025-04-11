@@ -2,12 +2,12 @@ module github.com/shunirr/extract-chrome-storage
 
 go 1.23.4
 
-require golang.org/x/crypto v0.33.0
+require golang.org/x/crypto v0.37.0
 
 require (
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/syndtr/goleveldb v1.0.0
-	golang.org/x/text v0.22.0
+	golang.org/x/text v0.24.0
 )
 
 require (
