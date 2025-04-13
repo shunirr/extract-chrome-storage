@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"regexp"
 
+	// "regexp"
+
 	"golang.org/x/text/encoding/unicode"
 
 	"github.com/syndtr/goleveldb/leveldb"
@@ -111,9 +113,6 @@ func GetChromeLocalStorage(localStoragePath string, url string, localStorageKey 
 	if value[0] == 0x01 {
 		value = value[1:]
 	}
-	if len(value)%2 != 0 {
-		value = value[:len(value)-1]
-	}
 
 	json, err := recoverBrokenJson(value)
 	if err != nil {
@@ -124,6 +123,9 @@ func GetChromeLocalStorage(localStoragePath string, url string, localStorageKey 
 }
 
 func decodeUTF16(b []byte) (string, error) {
+	if len(b)%2 != 0 {
+		b = b[:len(b)-1]
+	}
 	decoder := unicode.UTF16(unicode.BigEndian, unicode.IgnoreBOM).NewDecoder()
 	reader := transform.NewReader(bytes.NewReader(b), decoder)
 	decoded, err := io.ReadAll(reader)
@@ -133,13 +135,34 @@ func decodeUTF16(b []byte) (string, error) {
 	return string(decoded), nil
 }
 
-func recoverBrokenJson(input []byte) (string, error) {
-	decoded, err := decodeUTF16(input)
-	if err != nil {
-		return "", fmt.Errorf("failed to decode UTF-16: %s\n%s", input, err)
+func isLikelyUTF16(b []byte) bool {
+	if len(b) < 4 || len(b)%2 != 0 {
+		return false
 	}
-	re := regexp.MustCompile(`:"([^",]+),"`)
 
+	zeroCount := 0
+	for i := 0; i < len(b); i += 2 {
+		if b[i] == 0x00 {
+			zeroCount++
+		}
+	}
+
+	return zeroCount >= len(b)/4
+}
+
+func recoverBrokenJson(input []byte) (string, error) {
+	var decoded string
+	if isLikelyUTF16(input) {
+		var err error
+		decoded, err = decodeUTF16(input)
+		if err != nil {
+			return "", fmt.Errorf("failed to decode UTF-16: %s", err)
+		}
+	} else {
+		decoded = string(input)
+	}
+
+	re := regexp.MustCompile(`:"([^",]+),"`)
 	fixed := re.ReplaceAllString(decoded, `:"$1","`)
 	return fixed, nil
 }
