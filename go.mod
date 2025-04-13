@@ -7,7 +7,7 @@ require golang.org/x/crypto v0.33.0
 require (
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/syndtr/goleveldb v1.0.0
-	golang.org/x/text v0.22.0
+	golang.org/x/text v0.24.0
 )
 
 require (
