@@ -2,14 +2,23 @@
   "editor.tabSize": 2,
   "editor.useTabStops": false,
   "cSpell.words": [
+    "blackfriday",
+    "cnqoj",
+    "cpuguy",
     "goleveldb",
+    "goreleaser",
     "leveldb",
     "mattn",
+    "modeline",
+    "modelines",
+    "russross",
+    "shunirr",
     "slackmacgap",
     "syndtr",
     "tinyspeck",
     "unpad",
     "unpadding",
     "urfave"
-  ]
+  ],
+  "editor.formatOnSave": true
 }
