@@ -146,16 +146,17 @@ func isLikelyUTF16(b []byte) bool {
 }
 
 func recoverBrokenJson(input []byte) (string, error) {
-	var decoded string
+	var decoded = ""
 
 	utf16input := input[:len(input)-1]
 	if isLikelyUTF16(utf16input) {
 		var err error
 		decoded, err = decodeUTF16(utf16input)
 		if err != nil {
-			return "", fmt.Errorf("failed to decode UTF-16: %s", err)
+			fmt.Printf("failed to decode UTF-16: %s\n", err)
 		}
-	} else {
+	}
+	if decoded == "" {
 		decoded = string(input)
 	}
 
