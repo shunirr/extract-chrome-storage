@@ -121,9 +121,6 @@ func GetChromeLocalStorage(localStoragePath string, url string, localStorageKey 
 }
 
 func decodeUTF16(b []byte) (string, error) {
-	if len(b)%2 != 0 {
-		b = b[:len(b)-1]
-	}
 	decoder := unicode.UTF16(unicode.BigEndian, unicode.IgnoreBOM).NewDecoder()
 	reader := transform.NewReader(bytes.NewReader(b), decoder)
 	decoded, err := io.ReadAll(reader)
@@ -150,9 +147,11 @@ func isLikelyUTF16(b []byte) bool {
 
 func recoverBrokenJson(input []byte) (string, error) {
 	var decoded string
-	if isLikelyUTF16(input) {
+
+	utf16input := input[:len(input)-1]
+	if isLikelyUTF16(utf16input) {
 		var err error
-		decoded, err = decodeUTF16(input)
+		decoded, err = decodeUTF16(utf16input)
 		if err != nil {
 			return "", fmt.Errorf("failed to decode UTF-16: %s", err)
 		}
