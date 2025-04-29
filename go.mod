@@ -5,7 +5,7 @@ go 1.23.4
 require golang.org/x/crypto v0.37.0
 
 require (
-	github.com/mattn/go-sqlite3 v1.14.27
+	github.com/mattn/go-sqlite3 v1.14.28
 	github.com/syndtr/goleveldb v1.0.0
 	github.com/urfave/cli v1.22.16
 	golang.org/x/text v0.24.0
